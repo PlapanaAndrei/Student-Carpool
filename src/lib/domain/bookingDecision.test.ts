@@ -26,8 +26,8 @@ const ride: Ride = {
 	]
 };
 
-describe('respondToBooking (US-06)', () => {
-	test('șoferul acceptă o cerere de rezervare pending', () => {
+describe('respondToBooking', () => {
+	test('șoferul acceptă o cerere de rezervare', () => {
 		const updated = respondToBooking(ride, 'driver', 'p1', 'accept');
 		expect(updated.bookings.find((b) => b.passengerId === 'p1')?.status).toBe('accepted');
 	});
@@ -38,12 +38,12 @@ describe('respondToBooking (US-06)', () => {
 		expect(freeSeats(updated)).toBe(1);
 	});
 
-	test('nu modifică obiectul original (imutabilitate garantată)', () => {
+	test('nu modifică obiectul original', () => {
 		respondToBooking(ride, 'driver', 'p1', 'accept');
 		expect(ride.bookings[0].status).toBe('pending');
 	});
 
-	test('doar șoferul cursei are permisiunea să răspundă', () => {
+	test('doar șoferul cursei are permisiunea să răspundă cererilor', () => {
 		expect(codeOf(() => respondToBooking(ride, 'p2', 'p1', 'accept'))).toBe('NOT_DRIVER');
 	});
 

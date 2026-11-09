@@ -2,11 +2,6 @@ import { DomainError, type Ride } from './types';
 
 export type Decision = 'accept' | 'reject';
 
-/**
- * US-06: Șoferul acceptă sau respinge o cerere de rezervare aflată în așteptare ('pending').
- * Întoarce o nouă instanță de cursă (imutabilitate).
- * Respingerea ('reject') marchează cererea ca respinsă și eliberează locul.
- */
 export function respondToBooking(
 	ride: Ride,
 	actingUserId: string,
@@ -16,10 +11,14 @@ export function respondToBooking(
 	if (actingUserId !== ride.driverId) {
 		throw new DomainError('NOT_DRIVER', 'Doar șoferul cursei poate răspunde cererilor de rezervare');
 	}
-	const target = ride.bookings.find((b) => b.passengerId === passengerId && b.status === 'pending');
+
+	const target = ride.bookings.find(
+		(b) => b.passengerId === passengerId && b.status === 'pending'
+	);
 	if (!target) {
 		throw new DomainError('PENDING_BOOKING_NOT_FOUND', 'Nu există o cerere în așteptare pentru acest pasager');
 	}
+
 	const status = decision === 'accept' ? 'accepted' : 'rejected';
 	return {
 		...ride,

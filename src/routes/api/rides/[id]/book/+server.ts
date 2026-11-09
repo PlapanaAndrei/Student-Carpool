@@ -6,10 +6,6 @@ import { DomainError } from '$lib/domain/types';
 import { loadRide } from '$lib/server/rideRepository';
 import type { RequestHandler } from './$types';
 
-/**
- * US-05: Pasagerul rezervă un loc într-o cursă.
- * Validează regulile prin bookSeat din domeniul de business și creează cererea cu status 'pending'.
- */
 export const POST: RequestHandler = async ({ params, locals }) => {
 	if (!locals.user) {
 		throw error(401, 'Autentificare necesară');

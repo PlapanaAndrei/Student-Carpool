@@ -7,10 +7,6 @@ import { loadRide } from '$lib/server/rideRepository';
 import { eq, and } from 'drizzle-orm';
 import type { RequestHandler } from './$types';
 
-/**
- * US-07: Pasagerul își anulează rezervarea înainte de plecare.
- * Validează regulile prin cancelBooking și actualizează statusul în 'cancelled' eliberând locul.
- */
 export const POST: RequestHandler = async ({ params, locals }) => {
 	if (!locals.user) {
 		throw error(401, 'Autentificare necesară');
@@ -36,5 +32,9 @@ export const POST: RequestHandler = async ({ params, locals }) => {
 		.where(and(eq(booking.rideId, params.id), eq(booking.passengerId, locals.user.id)))
 		.returning();
 
-	return json(updated ?? { status: 'cancelled' }, { status: 200 });
+	if (!updated) {
+		throw error(404, 'Rezervarea nu a fost găsită în baza de date');
+	}
+
+	return json(updated, { status: 200 });
 };

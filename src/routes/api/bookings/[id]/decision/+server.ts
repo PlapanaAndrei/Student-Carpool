@@ -7,10 +7,6 @@ import { loadRide } from '$lib/server/rideRepository';
 import { eq } from 'drizzle-orm';
 import type { RequestHandler } from './$types';
 
-/**
- * US-06: Șoferul acceptă sau respinge o cerere de rezervare primită.
- * Payload: { decision: 'accept' | 'reject' }
- */
 export const POST: RequestHandler = async ({ params, request, locals }) => {
 	if (!locals.user) {
 		throw error(401, 'Autentificare necesară');
@@ -53,5 +49,9 @@ export const POST: RequestHandler = async ({ params, request, locals }) => {
 		.where(eq(booking.id, bookingId))
 		.returning();
 
-	return json(updated ?? { id: bookingId, status: newStatus }, { status: 200 });
+	if (!updated) {
+		throw error(404, 'Rezervarea nu a putut fi actualizată');
+	}
+
+	return json(updated, { status: 200 });
 };
