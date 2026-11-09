@@ -9,12 +9,12 @@ import type { RequestHandler } from './$types';
 
 export const POST: RequestHandler = async ({ params, locals }) => {
 	if (!locals.user) {
-		throw error(401, 'Autentificare necesară');
+		throw error(401, 'Authentication required');
 	}
 
 	const current = await loadRide(params.id);
 	if (!current) {
-		throw error(404, 'Cursa nu există');
+		throw error(404, 'Ride not found');
 	}
 
 	try {
@@ -33,7 +33,7 @@ export const POST: RequestHandler = async ({ params, locals }) => {
 		.returning();
 
 	if (!updated) {
-		throw error(404, 'Rezervarea nu a fost găsită în baza de date');
+		throw error(404, 'Booking not found');
 	}
 
 	return json(updated, { status: 200 });

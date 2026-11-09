@@ -6,19 +6,19 @@ const isBookingActive = (status: BookingStatus) =>
 
 export function bookSeat(ride: Ride, passengerId: string, now: Date = new Date()): Ride {
 	if (ride.status !== 'open') {
-		throw new DomainError('RIDE_NOT_OPEN', 'Cursa nu este deschisă pentru rezervări');
+		throw new DomainError('RIDE_NOT_OPEN', 'Ride is not open for bookings');
 	}
 	if (ride.departureAt.getTime() <= now.getTime()) {
-		throw new DomainError('RIDE_DEPARTED', 'Cursa a plecat deja');
+		throw new DomainError('RIDE_DEPARTED', 'Ride has already departed');
 	}
 	if (passengerId === ride.driverId) {
-		throw new DomainError('DRIVER_CANNOT_BOOK', 'Șoferul nu își poate rezerva propria cursă');
+		throw new DomainError('DRIVER_CANNOT_BOOK', 'Driver cannot book their own ride');
 	}
 	if (ride.bookings.some((b) => b.passengerId === passengerId && isBookingActive(b.status))) {
-		throw new DomainError('ALREADY_BOOKED', 'Pasagerul are deja o rezervare activă');
+		throw new DomainError('ALREADY_BOOKED', 'Passenger already has an active booking for this ride');
 	}
 	if (freeSeats(ride) <= 0) {
-		throw new DomainError('RIDE_FULL', 'Nu mai sunt locuri libere');
+		throw new DomainError('RIDE_FULL', 'No available seats on this ride');
 	}
 
 	return {
@@ -32,10 +32,10 @@ export function cancelBooking(ride: Ride, passengerId: string, now: Date = new D
 		(b) => b.passengerId === passengerId && isBookingActive(b.status)
 	);
 	if (!target) {
-		throw new DomainError('BOOKING_NOT_FOUND', 'Nu a fost găsită o rezervare activă');
+		throw new DomainError('BOOKING_NOT_FOUND', 'Active booking not found');
 	}
 	if (ride.departureAt.getTime() <= now.getTime()) {
-		throw new DomainError('RIDE_DEPARTED', 'Nu se mai poate anula rezervarea după ora plecării');
+		throw new DomainError('RIDE_DEPARTED', 'Cannot cancel booking after departure time');
 	}
 
 	return {

@@ -9,14 +9,14 @@ export function respondToBooking(
 	decision: Decision
 ): Ride {
 	if (actingUserId !== ride.driverId) {
-		throw new DomainError('NOT_DRIVER', 'Doar șoferul cursei poate răspunde cererilor de rezervare');
+		throw new DomainError('NOT_DRIVER', 'Only the assigned driver can respond to booking requests');
 	}
 
 	const target = ride.bookings.find(
 		(b) => b.passengerId === passengerId && b.status === 'pending'
 	);
 	if (!target) {
-		throw new DomainError('PENDING_BOOKING_NOT_FOUND', 'Nu există o cerere în așteptare pentru acest pasager');
+		throw new DomainError('PENDING_BOOKING_NOT_FOUND', 'Pending booking request not found');
 	}
 
 	const status = decision === 'accept' ? 'accepted' : 'rejected';

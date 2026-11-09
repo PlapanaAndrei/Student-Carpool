@@ -18,7 +18,6 @@ export interface Ride {
 	bookings: Booking[];
 }
 
-/** Eroare de business, cu cod stabil ca testele sa nu depinda de text. */
 export class DomainError extends Error {
 	constructor(
 		public readonly code: string,

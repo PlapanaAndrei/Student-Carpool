@@ -29,69 +29,69 @@ function makeRide(over: Partial<Ride> = {}): Ride {
 }
 
 describe('bookSeat', () => {
-	test('scade locurile libere și adaugă cererea ca pending', () => {
+	test('decrements free seats and creates a pending booking', () => {
 		const updated = bookSeat(makeRide(), 'p1', now);
 		expect(freeSeats(updated)).toBe(1);
 		expect(updated.bookings).toEqual([{ passengerId: 'p1', status: 'pending' }]);
 	});
 
-	test('nu modifică cursa originală', () => {
+	test('preserves immutability of original ride instance', () => {
 		const ride = makeRide();
 		bookSeat(ride, 'p1', now);
 		expect(ride.bookings).toHaveLength(0);
 	});
 
-	test('respinge rezervarea când nu mai sunt locuri disponibile', () => {
+	test('rejects booking when no free seats are available', () => {
 		const full = makeRide({ totalSeats: 1, bookings: [{ passengerId: 'a', status: 'accepted' }] });
 		expect(codeOf(() => bookSeat(full, 'p1', now))).toBe('RIDE_FULL');
 	});
 
-	test('respinge o a doua cerere de rezervare activă de la același pasager', () => {
+	test('rejects duplicate booking from the same passenger', () => {
 		const ride = makeRide({ bookings: [{ passengerId: 'p1', status: 'pending' }] });
 		expect(codeOf(() => bookSeat(ride, 'p1', now))).toBe('ALREADY_BOOKED');
 	});
 
-	test('șoferul nu își poate rezerva un loc în propria cursă', () => {
+	test('prevents drivers from booking their own ride', () => {
 		expect(codeOf(() => bookSeat(makeRide(), 'driver', now))).toBe('DRIVER_CANNOT_BOOK');
 	});
 
-	test('cursa anulată sau plecată nu mai acceptă rezervări', () => {
+	test('rejects bookings for cancelled or departed rides', () => {
 		expect(codeOf(() => bookSeat(makeRide({ status: 'cancelled' }), 'p1', now))).toBe('RIDE_NOT_OPEN');
 		const later = new Date('2030-01-03T00:00:00');
 		expect(codeOf(() => bookSeat(makeRide(), 'p1', later))).toBe('RIDE_DEPARTED');
 	});
 
-	test('pasagerul poate rezerva din nou dacă rezervarea anterioară a fost anulată', () => {
+	test('allows passenger to re-book after prior booking was cancelled', () => {
 		const ride = makeRide({ bookings: [{ passengerId: 'p1', status: 'cancelled' }] });
 		expect(freeSeats(bookSeat(ride, 'p1', now))).toBe(1);
 	});
 });
 
 describe('cancelBooking', () => {
-	test('anularea eliberează locul ocupat', () => {
+	test('cancels active booking and restores available seat count', () => {
 		const ride = makeRide({ bookings: [{ passengerId: 'p1', status: 'accepted' }] });
 		const updated = cancelBooking(ride, 'p1', now);
 		expect(freeSeats(updated)).toBe(2);
 		expect(updated.bookings[0].status).toBe('cancelled');
 	});
 
-	test('funcționează și pentru cererile aflate în așteptare', () => {
+	test('supports cancelling pending requests', () => {
 		const ride = makeRide({ bookings: [{ passengerId: 'p1', status: 'pending' }] });
 		expect(cancelBooking(ride, 'p1', now).bookings[0].status).toBe('cancelled');
 	});
 
-	test('aruncă eroare la anularea unei rezervări inexistente sau deja anulate', () => {
+	test('throws when cancelling non-existent or already cancelled booking', () => {
 		expect(codeOf(() => cancelBooking(makeRide(), 'p1', now))).toBe('BOOKING_NOT_FOUND');
 		const ride = makeRide({ bookings: [{ passengerId: 'p1', status: 'cancelled' }] });
 		expect(codeOf(() => cancelBooking(ride, 'p1', now))).toBe('BOOKING_NOT_FOUND');
 	});
 
-	test('nu permite anularea după plecarea cursei', () => {
+	test('disallows cancellation after departure time', () => {
 		const ride = makeRide({ bookings: [{ passengerId: 'p1', status: 'accepted' }] });
 		expect(codeOf(() => cancelBooking(ride, 'p1', new Date('2030-01-03T00:00:00')))).toBe('RIDE_DEPARTED');
 	});
 
-	test('anulează doar rezervarea pasagerului apelant', () => {
+	test('cancels only the target passenger booking without affecting others', () => {
 		const ride = makeRide({
 			bookings: [
 				{ passengerId: 'p1', status: 'accepted' },

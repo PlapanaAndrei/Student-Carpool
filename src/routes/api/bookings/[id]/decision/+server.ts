@@ -9,23 +9,23 @@ import type { RequestHandler } from './$types';
 
 export const POST: RequestHandler = async ({ params, request, locals }) => {
 	if (!locals.user) {
-		throw error(401, 'Autentificare necesară');
+		throw error(401, 'Authentication required');
 	}
 
 	const body = await request.json().catch(() => null);
 	if (!body || (body.decision !== 'accept' && body.decision !== 'reject')) {
-		throw error(400, "Câmpul 'decision' este obligatoriu și trebuie să fie 'accept' sau 'reject'");
+		throw error(400, "Field 'decision' is required and must be either 'accept' or 'reject'");
 	}
 
 	const bookingId = params.id;
 	const [targetBooking] = await db.select().from(booking).where(eq(booking.id, bookingId));
 	if (!targetBooking) {
-		throw error(404, 'Rezervarea nu a fost găsită');
+		throw error(404, 'Booking not found');
 	}
 
 	const currentRide = await loadRide(targetBooking.rideId);
 	if (!currentRide) {
-		throw error(404, 'Cursa asociată nu a fost găsită');
+		throw error(404, 'Associated ride not found');
 	}
 
 	try {
@@ -50,7 +50,7 @@ export const POST: RequestHandler = async ({ params, request, locals }) => {
 		.returning();
 
 	if (!updated) {
-		throw error(404, 'Rezervarea nu a putut fi actualizată');
+		throw error(404, 'Booking could not be updated');
 	}
 
 	return json(updated, { status: 200 });

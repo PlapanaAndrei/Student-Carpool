@@ -27,27 +27,27 @@ const ride: Ride = {
 };
 
 describe('respondToBooking', () => {
-	test('șoferul acceptă o cerere de rezervare', () => {
+	test('driver accepts a pending booking request', () => {
 		const updated = respondToBooking(ride, 'driver', 'p1', 'accept');
 		expect(updated.bookings.find((b) => b.passengerId === 'p1')?.status).toBe('accepted');
 	});
 
-	test('respingerea unei cereri eliberează locul ocupat', () => {
+	test('rejecting a request restores available seat count', () => {
 		expect(freeSeats(ride)).toBe(0);
 		const updated = respondToBooking(ride, 'driver', 'p1', 'reject');
 		expect(freeSeats(updated)).toBe(1);
 	});
 
-	test('nu modifică obiectul original', () => {
+	test('preserves immutability of original ride instance', () => {
 		respondToBooking(ride, 'driver', 'p1', 'accept');
 		expect(ride.bookings[0].status).toBe('pending');
 	});
 
-	test('doar șoferul cursei are permisiunea să răspundă cererilor', () => {
+	test('authorizes only the assigned driver to respond', () => {
 		expect(codeOf(() => respondToBooking(ride, 'p2', 'p1', 'accept'))).toBe('NOT_DRIVER');
 	});
 
-	test('cererea trebuie să fie în starea pending', () => {
+	test('requires booking request to be in pending state', () => {
 		expect(codeOf(() => respondToBooking(ride, 'driver', 'p2', 'accept'))).toBe(
 			'PENDING_BOOKING_NOT_FOUND'
 		);
