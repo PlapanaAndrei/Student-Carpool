@@ -127,6 +127,6 @@ UC4 ..> UC1 : <<include>>
 
 ## 7. Ipoteze și Limite ale Proiectului
 
-* Se acceptă exclusiv o listă configurabilă de domenii universitare autorizate (`@s.unibuc.ro`, `@stud.acs.upb.ro`, etc.).
+* Se acceptă exclusiv adrese de e-mail instituționale autorizate aparținând universităților acreditate din România (ex: `@s.unibuc.ro`, `@stud.acs.upb.ro`, `@stud.ubbcluj.ro`, `@student.upt.ro` etc.).
 * Plățile online cu cardul nu fac parte din scopul MVP-ului; împărțirea costurilor este informativă, decontarea făcându-se direct între studenți.
 * Sistemul de chat în timp real și notificările push native pe mobil sunt planificate pentru etape ulterioare.

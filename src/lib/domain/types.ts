@@ -2,6 +2,7 @@ export type BookingStatus = 'pending' | 'accepted' | 'rejected' | 'cancelled';
 export type RideStatus = 'open' | 'cancelled' | 'completed';
 
 export interface Booking {
+	id?: string;
 	passengerId: string;
 	status: BookingStatus;
 }
