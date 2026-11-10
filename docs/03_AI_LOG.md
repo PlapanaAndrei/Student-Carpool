@@ -1,0 +1,5 @@
+# AI Log
+
+| # | Membru | Instrument | Scop | Prompt / Solicitare (rezumat) | Rezultat obținut | Intervenție manuală / Verificare | Mod de validare tehnică |
+|---|---|---|---|---|---|---|---|
+| 1 | Daniel | Antigravity CLI | Implementare TDD pentru logica de rezervare, anulare și decizie șofer (US-05, US-07, US-06) și setup CI | Generare structură inițială modele pure de domeniu și scenarii de testare Vitest pentru criteriile Given-When-Then, configurare workflow CI | `src/lib/domain/booking.ts`, `bookingDecision.ts`, `seats.ts`, `tdd/booking.test.ts`, `bookingDecision.test.ts`, endpoint-uri API `/api/rides/...`, `.github/workflows/test.yml` | Refactorizare completă cod, curățare comentarii redundante, standardizare mesaje de eroare HTTP în engleză, decuplare domeniu pur de persistență | Rulare locală a celor 17 teste unitare Vitest (`npx vitest run`) – trecute 100% (green); validare automată în pipeline-ul GitHub Actions |
