@@ -1,37 +1,37 @@
 # Product Backlog – StudentCarpool
 
-Backlog-ul de produs conține cerințele funcționale sub formă de User Stories, ordonate după valoarea adusă utilizatorilor și prioritizate conform metodei MoSCoW. Estimările în Story Points (SP) au fost stabilite în urma sesiunii de Planning Poker (vezi `03_planning_poker.md`).
+Backlog-ul de produs conține cerințele funcționale sub formă de User Stories, ordonate după valoarea adusă utilizatorilor și prioritizate conform metodei MoSCoW, conform specificațiilor stabilite de Product Owner (Cosmin Răcuciu).
 
-## Tabel User Stories
+## Tabel User Stories (22 User Stories)
 
-| # | ID | User Story | Prioritate | Justificare | Depinde de | SP |
-|---|---|---|---|---|---|---|
-| 1 | **US-01** | Ca student, mă înregistrez cu email universitar, pentru a dovedi că fac parte din comunitate | Must | Asigură o comunitate închisă și de încredere între studenți | – | 5 |
-| 2 | **US-02** | Ca utilizator, mă autentific și mă deconectez, pentru a-mi accesa contul | Must | Necesar pentru accesul la funcționalitățile personalizate | US-01 | 2 |
-| 3 | **US-03** | Ca șofer, public o cursă (origine, destinație, dată/oră, locuri, preț), pentru a găsi pasageri | Must | Crearea ofertei de transport în platformă | US-02 | 5 |
-| 4 | **US-04** | Ca pasager, caut curse după oraș și dată, pentru a găsi un drum potrivit | Must | Funcționalitatea esențială de căutare pentru pasageri | US-03 | 3 |
-| 5 | **US-05** | Ca pasager, rezerv un loc, pentru a-mi asigura transportul | Must | Fluxul tranzacțional principal de rezervare | US-04 | 5 |
-| 6 | **US-07** | Ca pasager, îmi anulez rezervarea, pentru a-mi schimba planurile | Must | Permite eliberarea locului pentru alți pasageri înainte de cursă | US-05 | 3 |
-| 7 | **US-06** | Ca șofer, accept sau resping cererile de rezervare, pentru a controla cine călătorește cu mine | Must | Siguranță și control pentru șofer | US-05 | 3 |
-| 8 | **US-08a** | Ca șofer, văd cursele mele și cererile primite | Must | Managementul curselor active și al solicitărilor | US-03 | 3 |
-| 9 | **US-08b** | Ca pasager, văd rezervările mele și starea lor | Must | Monitorizarea statusului cererilor trimise | US-05 | 2 |
-| 10 | **US-11** | Ca pasager, văd costul estimat per persoană | Should | Transparență în împărțirea costurilor de drum | US-03 | 2 |
-| 11 | **US-09** | Ca șofer, editez sau anulez o cursă publicată | Should | Flexibilitate în cazul modificării programului | US-03 | 3 |
-| 12 | **US-10** | Ca utilizator, îmi editez profilul (nume, telefon, universitate) | Should | Menținerea datelor de contact actualizate | US-02 | 2 |
-| 13 | **US-12** | Ca pasager, las un rating după cursă | Should | Construirea reputației șoferilor în comunitate | US-08b | 3 |
-| 14 | **US-13** | Ca utilizator, văd ratingul mediu al șoferului înainte de rezervare | Should | Luarea unei decizii informate la rezervare | US-12 | 2 |
-| 15 | **US-14** | Ca pasager, filtrez cursele după preț și ora plecării | Should | Confort sporit în găsirea cursei optime | US-04 | 2 |
-| 16 | **US-15** | Ca utilizator, primesc notificări la schimbarea stării rezervării | Should | Informare rapidă fără verificare manuală repetată | US-06 | 5 |
-| 17 | **US-16** | Ca admin, blochez conturi abuzive | Should | Moderare și menținerea standardelor comunității | US-02 | 3 |
-| 18 | **US-17** | Ca admin, văd lista sesizărilor | Could | Panou de administrare pentru tichetele primite | US-16 | 3 |
-| 19 | **US-18** | Ca utilizator, raportez un alt utilizator | Could | Mecanism de feedback pentru incidente | US-08b | 2 |
-| 20 | **US-19** | Ca șofer, public curse recurente | Could | Automatizare pentru naveta frecventă | US-03 | 5 |
-| 21 | **US-20** | Ca utilizator, văd CO₂ economisit | Could | Conștientizare ecologică și motivare | US-08b | 2 |
-| 22 | **US-21** | Ca utilizator, resetez parola prin email | Could | Recuperare securizată a accesului la cont | US-02 | 3 |
+| # | ID | User Story | Prioritate | Justificare | Depinde de |
+|---|---|---|:---:|---|---|
+| 1 | **US-01** | Ca student, mă înregistrez cu email universitar, pentru a dovedi că fac parte din comunitate | Must | Fără ea nu există comunitate verificată | – |
+| 2 | **US-02** | Ca utilizator, mă autentific și mă deconectez, pentru accesul la cont | Must | Toate acțiunile cer cont | US-01 |
+| 3 | **US-03** | Ca șofer, public o cursă, pentru a găsi pasageri | Must | Fără curse nu există oferte în platformă | US-02 |
+| 4 | **US-04** | Ca pasager, caut curse după oraș și dată, pentru a găsi cursa potrivită | Must | Valoarea principală de căutare pentru pasager | US-03 |
+| 5 | **US-05** | Ca pasager, rezerv un loc, pentru a-mi asigura transportul | Must | Fluxul tranzacțional principal de rezervare | US-04 |
+| 6 | **US-06** | Ca șofer, accept sau resping cererile de rezervare, pentru a controla cine urcă în mașină | Must | Încredere, siguranță și control pentru șofer | US-05 |
+| 7 | **US-07** | Ca pasager, îmi anulez rezervarea, pentru a elibera locul | Must | Necesară pentru a nu bloca locurile altor colegi | US-05 |
+| 8 | **US-08a** | Ca șofer, pot să văd cursele mele și cererile primite | Must | Șoferul gestionează cererile active | US-03 |
+| 9 | **US-08b** | Ca pasager, pot să văd rezervările mele și starea lor | Must | Pasagerul urmărește răspunsul șoferului | US-05 |
+| 10 | **US-09** | Ca șofer, editez sau anulez o cursă publicată | Should | Flexibilitate când planurile se schimbă | US-03 |
+| 11 | **US-10** | Ca utilizator, îmi editez profilul (nume, telefon, universitate) | Should | Încredere și date de contact actualizate | US-02 |
+| 12 | **US-11** | Ca pasager, văd costurile estimate per persoană | Should | Transparență în împărțirea costurilor de drum | US-03 |
+| 13 | **US-12** | Ca pasager, las un rating după cursă | Should | Reputație și încredere în comunitate | US-08b |
+| 14 | **US-13** | Ca utilizator, văd ratingul mediu al șoferului înainte de rezervare | Should | Luarea unei decizii informate la rezervare | US-12 |
+| 15 | **US-14** | Ca pasager, filtrez cursele după preț și ora plecării | Should | Confort sporit în găsirea cursei optime | US-04 |
+| 16 | **US-15** | Ca utilizator, primesc notificări privind schimbarea stării rezervării | Should | Informare rapidă fără verificare manuală repetată | US-06 |
+| 17 | **US-16** | Ca admin, blochez conturile abuzive | Should | Securitate și moderarea comunității | US-02 |
+| 18 | **US-17** | Ca admin, pot vedea lista sesizărilor | Could | Panou de moderare pentru incidente raportate | US-16 |
+| 19 | **US-18** | Ca utilizator, pot raporta un alt utilizator | Could | Mecanism de feedback pentru comportament abuziv | US-08b |
+| 20 | **US-19** | Ca șofer, public curse recurente | Could | Automatizare pentru naveta frecventă | US-03 |
+| 21 | **US-20** | Ca utilizator, văd CO₂ economisit | Could | Conștientizare ecologică și motivare | US-08b |
+| 22 | **US-21** | Ca utilizator, îmi pot reseta parola prin email | Could | Recuperare securizată a accesului la cont | US-02 |
 
 ---
 
-## Criterii de acceptare (Given / When / Then) – Sprint Backlog
+## Criterii de acceptare (Given / When / Then) – Sprint 1
 
 - **US-01**
   - *Given* un utilizator pe pagina de înregistrare, *When* introduce un email universitar valid (`ion@s.unibuc.ro`), *Then* contul este creat.
@@ -72,4 +72,3 @@ Backlog-ul de produs conține cerințele funcționale sub formă de User Stories
 - **US-08**: A fost divizat în două componente distincte: `US-08a` (dashboard șofer) și `US-08b` (dashboard pasager) pentru a respecta criteriul *Small* și a permite alocarea paralelă.
 - **US-03**: Validările de date sunt complet decuplate de UI, fiind izolate în modulul de domeniu (`validateRide`).
 - **US-05**: Logica tranzacțională de rezervare este decuplată de persistență (`bookSeat`), permițând testarea unitară 100% fără baze de date active.
-- **Diferențiatori de produs**: Validarea strictă a comunității academice (US-01), algoritmul transparent de împărțire a costurilor (US-11) și metrica ecologică de CO₂ (US-20).
